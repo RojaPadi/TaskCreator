@@ -1,78 +1,110 @@
-# TaskCreator
-tree tasks project
+# Task Creator
 
-tasks :
-    ->Task has multiple sub tasks
-    ->Children of the task must not be its parent.
-    ->Task is done when all the subTasks has done.
+### Requirement
+##### Task
 
-EndPoints : 
-    Create Task:
-    ->Request : 
-      TYPE : POST 
-      URL  : /tasks
-      BODY : {
-          description
-      }
-    ->Response : 
-      {
-          id : '',
-          description : '',
-          status : '',
-          createdAt: '',
-          updatedAt  : ''
-      }
-    Update Task:
-    ->Request :
-    TYPE : PATCH
-    URL  : /tasks/:id
-      BODY : {
-          description:'',
-          status : ''
-      }
-    ->Response :  
-        {
-          id : '',
-          description : '',
-          status : '',
-          createdAt: '',
-          updatedAt  : ''  
-        }
+ - Contains 2 attributes (description and status).
+ - Status have 2 status (complete or incomplete).
+ - Task can have multiple sub tasks.
+ - Sub Task can never be dependent on parent task.
+ - A task is complete only when all sub tasks are complete. 
 
-    Delete Task:
-    ->Request :
-    TYPE : DELETE
-    URL  : /tasks/:id
+### API Endpoints
 
-  add SubTask:
-  ->Request :
-   TYPE : POST
-   URL : /tasks/:id/subTask
-   BODY : {
-     subtaskId : ''
-   }
-  -> Response
-  {
-    subtask/task
-  }
+##### Task
+	
+```
+ Task Response
+ {
+	 id	 
+	 desciption
+	 status	
+	 createdAt
+	 updatedAt
+	 SubTasks 
+ }
+```
 
-  delete SubTask:
-  ->Request :
-   TYPE : DELETE
-   URL : /tasks/:id/subTask/:id
+ - Create
+ ```
+ ### Request ###
+ type: POST
+ url : api_url/tasks
+ body: {
+	 description: <descrition>
+ }
+ 
+ Response
+ Task Response
+ ```
+ 
+ - Update Task
+```
+Request
+type: patch
+url : api_url/tasks/:id
+body: {
+	description
+}
 
-   Update Sub Task:
-    ->Request :
-    TYPE : PATCH
-    URL  : /tasks/:id/subTask/:id
-      BODY : {
-          
-      }
-    ->Response :  {
-      subTask
-    }
-        
+Response
+Task Response
+```
 
+ - Delete Task
+```
+Request 
+type: delete
+url : api_url/id
 
+Response
+Code: 204
+```
+
+ - Add Sub Task
+ ```
+ Request
+ type: post
+ url : api_url/tasks/:id/subTask
+ body:{
+	 id: <SubTaskId>
+ }
+
+Response
+TaskResponse
+ ```
+
+- Delete Sub Task
+```
+Request
+type: delete
+url : api_url/tasks/:id/subTask
+body:{
+	id: <SubTaskId>
+}
+
+Response
+code: 204
+```
+
+ - Update Status ( Change Task Status to Complete)
+ ```
+ Request
+ type: patch
+ url : api_url/tasks/:id/status
+ 
+ Response
+ TaskResponse
+ ```
+ 
+ - Update Status ( Change Task Status to In Complete)
+ ```
+ Request
+ type: delete
+ url : api_url/tasks/:id/status
+ 
+ Response
+ TaskResponse
+ ```
 
 
